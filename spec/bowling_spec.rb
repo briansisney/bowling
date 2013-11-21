@@ -28,6 +28,12 @@ describe BowlingGame do
 				expect(game.score).to eq(20)
 			end
 		end
+		context 'when spare occurs' do
+			it 'records the the pin after'do
+				3.times {game.roll(5)}
+				expect(game.score).to eq(20)
+			end
+		end
 	end
 
 end
