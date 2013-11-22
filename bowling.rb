@@ -7,31 +7,19 @@ class BowlingGame
 
 	def roll(pins)
 		@rolls << pins
+		roll(0) if pins > 9 && @rolls.length < 19
 	end
 
 	def score
-		second_last = 0
-		last = 0
-		# @rolls.inject(0) do |mem, current|
-		# 	if (last + second_last) > 9
-		# 		2.times{ mem += current }
-		# 	else
-		# 		mem += current
-		# 	end
-		# 	  second_last = last
-		# 	  last = current
-		# 	  mem
-		# end
-
-
+		i, last, second_last, third_last = 0, 0, 0, 0
 		@rolls.inject(0) do |mem, current|
-			mem += current if (last + second_last) > 9	
-			mem += current
-			second_last = last
-		    last = current
+			i += 1
+			mem += current if (last + second_last) > 9 && i.odd? && (second_last != 10 || i == 21)
+			mem += current + last if third_last == 10 
+			mem += current unless i == 21
+			last, second_last, third_last = current, last, second_last
 			mem
 		end
-
 	end
-
+	
 end
